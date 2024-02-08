@@ -45,8 +45,13 @@ send_email_task = EmailOperator(
 download_task >> clean_data_task >> send_email_task
 
 #task1 >> task2 >>task3
+#First will be then download_task(task1) after this task clean_data_task(task2) then after this send_email_task(task3)
 
-                                                     #First will be then download_task(task1) after this task clean_data_task(task2) then after this send_email_task(task3)
+#All the above are action operators 
+# Opeartors are of 3 types-- 
+#Action opeartors --> bash pythpn email snowflake ,Hive, kubernetes pod opeartor 
+#transfer opeartor---> move data from 1 place to anather s3 to redshift snowflake Hive
+#sensor opeartor -->like trigger in sql --> s3 key sensor -->wait for file to be avaliable in s3
 
 
 
