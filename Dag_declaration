@@ -1,0 +1,53 @@
+# Imports 
+from airflow import DAG # compulsary import that is importing DAG class needed in every Dag
+from airflow.operators.bash_operator import BashOperator #for executing Bash_commands
+from airflow.operators.email_operator import EmailOperator # for email sending 
+from airflow.operators.python_operator import PythonOperator # for python functions
+from datetime import datetime, timedelta
+from clean_data import clean_data
+
+# Define or Instantiate DAG #creating object of Dag Class
+dag = DAG(     
+    dag_id='Vasudev_Dag', #this name will appear on Airflow UI
+    start_date=datetime(2023, 10, 1), 
+    end_date=datetime(2023, 12, 31),
+    schedule_interval='0 22 * * *',  #this takes cron Job 
+    default_args={"retries": 2, "retry_delay": timedelta(minutes=5)},
+    catchup=False
+)#here dag_id= name will appear on UI ,schedule interval will take cron job like 8:20 pm 18 dec monday= "20 19 18 12 1" 18 dec 8 
+
+# Define or Instantiate Tasks
+#Bash command 
+download_task = BashOperator(
+    task_id='download_file', #this name will appear on Airflow UI
+    bash_command='curl -o xrate.csv https://abcd.com '# curl -o for saving to filename=xrate.csv from url abcd.com  
+    cwd='/tmp',
+    dag=dag,
+)
+#python task of cleaning_data 
+clean_data_task = PythonOperator(
+    task_id='clean_data', #this name will appear on Airflow UI
+    python_callable=clean_data,
+    dag=dag,
+)
+#email task 
+
+send_email_task = EmailOperator(
+    task_id='send_email',  #this name will appear on Airflow UI
+    to='demo_mail@gmail.com',
+    subject='This will be su bject line of email',
+    html_content='The Exchange Rate data has been successfully downloaded, cleaned, and loaded.', #contents of mail 
+    dag=dag,
+)
+a
+# Define Task Dependencies
+download_task >> clean_data_task >> send_email_task
+
+#task1 >> task2 >>task3
+
+#First will be then download_task(task1) after this task clean_data_task(task2) then after this send_email_task(task3)
+
+
+
+
+
