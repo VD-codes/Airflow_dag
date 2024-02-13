@@ -18,6 +18,7 @@ dag = DAG(
 #Above dag_id= name will appear on UI ,schedule interval will take cron job like 7:20 pm 18 dec monday= "20 19 18 12 1" 18 dec 8 
 
 # Define or Instantiate Tasks
+
 #Bash commands 
 download_task = BashOperator(
     task_id='download_file', #this name will appear on Airflow UI
@@ -28,6 +29,8 @@ download_task = BashOperator(
 def clean_data(data):
   print("this is data cleaning tak in python for VD's demo purpose" )
   return data
+
+
 #python task of cleaning_data 
 clean_data_task = PythonOperator(
     task_id='clean_data', #this name will appear on Airflow UI
