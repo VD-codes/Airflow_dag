@@ -11,14 +11,14 @@ dag = DAG(
     dag_id='Vasudev_Dag',                                    #this name will appear on Airflow UI
     start_date=datetime(2023, 10, 1), 
     end_date=datetime(2023, 12, 31),
-    schedule_interval='0 22 * * *',                          #this takes cron Job 
+    schedule_interval='0 22 * * *',                          #this takes cron Job #can also be set as @daily,@weekly,@
     default_args={"retries": 2, "retry_delay": timedelta(minutes=5)},
     catchup=False
 ) 
-#Above dag_id= name will appear on UI ,schedule interval will take cron job like 8:20 pm 18 dec monday= "20 19 18 12 1" 18 dec 8 
+#Above dag_id= name will appear on UI ,schedule interval will take cron job like 7:20 pm 18 dec monday= "20 19 18 12 1" 18 dec 8 
 
 # Define or Instantiate Tasks
-#Bash command 
+#Bash commands 
 download_task = BashOperator(
     task_id='download_file', #this name will appear on Airflow UI
     bash_command='curl -o xrate.csv https://abcd.com'       # curl -o for saving to filename=xrate.csv from url abcd.com  #bash command
