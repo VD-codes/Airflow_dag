@@ -25,6 +25,9 @@ download_task = BashOperator(
     cwd='/tmp',
     dag=dag,
 )
+def clean_data(data):
+  print("this is data cleaning tak in python for VD's demo purpose" )
+  return data
 #python task of cleaning_data 
 clean_data_task = PythonOperator(
     task_id='clean_data', #this name will appear on Airflow UI
